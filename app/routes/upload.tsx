@@ -30,12 +30,9 @@ const upload = () => {
 
     const uploadedFile = await fs.upload([file]);
     if(!uploadedFile) return setStatusText("Error: Failed to upload file");
-    console.log("uploadedFile", uploadedFile);
 
     setStatusText("Converting to image...");
-    console.log("file", file);
     const imageFile = await convertPdfToImage(file);
-    console.log("imageFile", imageFile);
     if(!imageFile.file) return setStatusText("Error: Failed to convert PDF to image");
 
     setStatusText("Uploading the image...");
@@ -68,7 +65,6 @@ const upload = () => {
     data.feedback = JSON.parse(feedbackText);
     await kv.set(`resume:${uuid}`, JSON.stringify(data));
     setStatusText("Analysis complete, redirecting...");
-    console.log(data);
   }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {

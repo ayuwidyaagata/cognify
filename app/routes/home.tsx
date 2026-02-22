@@ -48,7 +48,14 @@ export default function Home() {
           {!isLoadingResumes && resumes.length === 0 ? (
             <h2>No resumes found. Upload your first resume to get feedback.</h2>
           ) : (
-            <h2>Review your submissions and check AI-powered feedback.</h2>
+            <>
+              <h2>Review your submissions and check AI-powered feedback.</h2>
+              <div className="flex flex-col items-center justify-center mt-4 gap-4">
+                <Link to="/wipe" className="primary-button w-fit text-xl">
+                  Wipe App Data
+                </Link>
+              </div>
+            </>
           )}
         </div>
 

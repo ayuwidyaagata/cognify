@@ -1,5 +1,6 @@
+import clsx from "clsx";
 import { useEffect } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { usePuterStore } from "~/lib/puter"
 
 export const meta = () => ([
@@ -18,34 +19,51 @@ const auth = () => {
   }, [auth.isAuthenticated, next]);
 
   return (
-    <main className="bg-[url('/images/bg-main.svg')] bg-cover min-h-screen flex items-center justify-center">
-      <div className="gradient-border shadow-lg">
-        <section className="flex flex-col gap-8 bg-white rounded-2xl p-10">
-          <div className="flex flex-col items-center gap-2 text-center">
-            <h1>Welcome</h1>
-            <h2>Log In to Continue Your Job Journey</h2>
-          </div>
+    <main className="pt-0! h-screen">
+      {!isLoading && auth.isAuthenticated && (
+        <nav className="resume-nav">
+          <Link to="/" className="back-button">
+            <img src="/icons/back.svg" alt="back" className="w-2.5 h-2.5" />
+            Back to Homepage
+          </Link>
+        </nav>
+      )}
+      <div 
+        className={clsx(
+          "bg-[url('/images/bg-main.svg')] bg-cover flex items-center justify-center",
+          !isLoading && auth.isAuthenticated
+            ? "h-[calc(100%-75px)]"
+            : "h-full"
+        )}
+      >
+        <div className="gradient-border shadow-lg"> 
+          <section className="flex flex-col gap-8 bg-white rounded-2xl p-10">
+            <div className="flex flex-col items-center gap-2 text-center">
+              <h1>Welcome</h1>
+              <h2>Log In to Continue Your Job Journey</h2>
+            </div>
 
-          <div>
-            {isLoading ? (
-              <button className="auth-button animate-pulse">
-                <p>Signing you in ...</p>
-              </button>
-            ) : (
-              <>
-                {auth.isAuthenticated ? (
-                  <button className="auth-button" onClick={auth.signOut}>
-                    <p>Log out</p>
-                  </button>
-                ) : (
-                  <button className="auth-button" onClick={auth.signIn}>
-                    <p>Log in</p>
-                  </button>
-                )}
-              </>
-            )}
-          </div>
-        </section>
+            <div>
+              {isLoading ? (
+                <button className="auth-button animate-pulse">
+                  <p>Signing you in ...</p>
+                </button>
+              ) : (
+                <>
+                  {auth.isAuthenticated ? (
+                    <button className="auth-button" onClick={auth.signOut}>
+                      <p>Log out</p>
+                    </button>
+                  ) : (
+                    <button className="auth-button" onClick={auth.signIn}>
+                      <p>Log in</p>
+                    </button>
+                  )}
+                </>
+              )}
+            </div>
+          </section>
+        </div>
       </div>
     </main>
   )
